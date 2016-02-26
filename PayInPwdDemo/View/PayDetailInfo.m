@@ -13,7 +13,7 @@
 
 @interface PayDetailInfo ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) UIButton *closeBtn;
+@property (nonatomic, strong) UIButton *closeBtn,*backBtn;
 @property (nonatomic, strong) UILabel *titleLabel, *line;
 
 @end
@@ -93,6 +93,16 @@
     self.detailTable.bounces = NO;
     self.detailTable.tableFooterView = [[UIView alloc] init];
     [self addSubview:self.detailTable];
+}
+
+- (UIButton *)createCommonButton {
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectZero;
+
+    [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    
+    return button;
 }
 
 #pragma mark - dismiss

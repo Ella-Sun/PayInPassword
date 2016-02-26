@@ -17,20 +17,31 @@ typedef enum{
     PaymentTypeTurn,//转账
 }PaymentType;
 
+/**
+ *  提示框弹出的形式
+ */
 typedef enum{
     PayAlertTypeAlert,//弹出的形式出现在屏幕中间
     PayAlertTypeSheet,//在下方出现
     PayAlertTypeOtherPage,//支付在另一个界面
 }PayAlertType;
 
-//付款方式选择
-typedef void(^cardInfo)(NSString * info);
+typedef enum{
+    PayTranslateTypeInOnepage,//在同一个界面内翻转，替换
+    PayTranslateTypeOtherPage,//滑动，替换
+}PayTranslateType;
+
 
 @interface PaymentView : UIView
 
 
 //提示框标题
 @property (nonatomic, copy) NSString * title;
+
+//付款方式选择
+@property (nonatomic, copy) void(^cardInfo)(NSString * info);
+
+@property (nonatomic, assign) NSInteger pwdCount;
 
 
 /**

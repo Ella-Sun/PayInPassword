@@ -16,4 +16,6 @@
 
 @property (nonatomic, copy) void (^completeHandle)(NSString *inputPwd);
 
+- (void)refreshInputViews;
+
 @end
