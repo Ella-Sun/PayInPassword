@@ -68,22 +68,24 @@
     
     self.inputpwdView.completeHandle = ^(NSString *inputPwd){
         weakSelf.completeHandle(inputPwd);
-        [weakSelf dismiss];
+        [weakSelf.inputpwdView.pwdTextField resignFirstResponder];
+        [weakSelf dismissWithCurrentView:weakSelf.paymentOtherView];
     };
     
     self.paymentAlert.choosePayCard = ^(){
         NSLog(@"选择支付的银行卡");
         UIButton * backBtn = [weakSelf.payCardView viewWithTag:113];
         backBtn.hidden = NO;
-        [weakSelf transformCurrentView:weakSelf.paymentAlert withLastView:weakSelf.payCardView];
+        [weakSelf transformDirection:YES withCurrentView:weakSelf.paymentAlert withLastView:weakSelf.payCardView];
     };
     
     self.paymentAlert.dismissBtnBlock = ^(){
-        [weakSelf dismiss];
+        [weakSelf dismissWithCurrentView:weakSelf.paymentAlert];
     };
     
     self.paymentOtherView.dismissBtnBlock = ^(){
-        [weakSelf dismiss];
+        [weakSelf.inputpwdView.pwdTextField resignFirstResponder];
+        [weakSelf dismissWithCurrentView:weakSelf.paymentOtherView];
     };
     
     self.paymentOtherView.backBtnBlock = ^(){
@@ -92,17 +94,17 @@
         [weakSelf.inputpwdView setDotWithCount:0];
         UIButton * backBtn = [weakSelf.paymentAlert viewWithTag:113];
         backBtn.hidden = YES;
-        [weakSelf transformCurrentView:weakSelf.paymentOtherView withLastView:weakSelf.paymentAlert];
+        [weakSelf transformDirection:NO withCurrentView:weakSelf.paymentOtherView withLastView:weakSelf.paymentAlert];
     };
     
     self.payCardView.dismissBtnBlock = ^(){
-        [weakSelf dismiss];
+        [weakSelf dismissWithCurrentView:weakSelf.payCardView];
     };
     
     self.payCardView.backBtnBlock = ^(){
         UIButton * backBtn = [weakSelf.paymentAlert viewWithTag:113];
         backBtn.hidden = YES;
-        [weakSelf transformCurrentView:weakSelf.payCardView withLastView:weakSelf.paymentAlert];
+        [weakSelf transformDirection:NO withCurrentView:weakSelf.payCardView withLastView:weakSelf.paymentAlert];
     };
     
     self.paymentAlert.changeFrameBlock = ^(CGFloat interHeight){
@@ -166,7 +168,7 @@
         [self.sureButton addTarget:self action:@selector(transformPaymentViews) forControlEvents:UIControlEventTouchUpInside];
         [self.paymentAlert addSubview:self.sureButton];
         
-        //第二个界面
+        //第二个密码输入界面
         self.paymentOtherView = [self createPaymentAlertViewCommon];
         self.paymentOtherView.tag = 132;
         self.paymentOtherView.hidden = YES;
@@ -216,24 +218,6 @@
     } completion:nil];
 }
 
-//界面消失
-- (void)dismiss {
-    [self.inputpwdView.pwdTextField resignFirstResponder];
-    [UIView animateWithDuration:0.3f animations:^{
-        self.paymentAlert.transform = CGAffineTransformMakeScale(1.21f, 1.21f);
-        self.paymentAlert.alpha = 0;
-        
-        self.paymentOtherView.transform = CGAffineTransformMakeScale(1.21f, 1.21f);
-        self.paymentOtherView.alpha = 0;
-        
-        self.payCardView.transform = CGAffineTransformMakeScale(1.21f, 1.21f);
-        self.payCardView.alpha = 0;
-        
-        self.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
-}
 
 //点击确认按钮，切换视图
 - (void)transformPaymentViews {
@@ -241,28 +225,15 @@
     self.paymentOtherView.hidden = NO;
     UIButton * backBtn = [self.paymentOtherView viewWithTag:113];
     backBtn.hidden = NO;
-    [self transformCurrentView:self.paymentAlert withLastView:self.paymentOtherView];
+    [self transformDirection:YES withCurrentView:self.paymentAlert withLastView:self.paymentOtherView];
+    
+    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:self.animateTime*.5];
+}
+
+- (void)delayMethod {
     [self.inputpwdView.pwdTextField becomeFirstResponder];
 }
 
-//翻转切换视图
-- (void)transformCurrentView:(UIView *)currentView withLastView:(UIView *)lastView {
-    
-    CGFloat offset = currentView.frame.size.height * .5;
-        lastView.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1, 0), CGAffineTransformTranslate(currentView.transform, 0, -offset));
-            lastView.alpha = 0;
-        lastView.hidden = NO;
-    
-    CGAffineTransform transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1.0f, 0.01f), CGAffineTransformMakeTranslation(1.0, offset));
-    
-    [UIView animateWithDuration:1.0f animations:^{
-        lastView.transform = CGAffineTransformIdentity;
-        currentView.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1.21f, 0.1), CGAffineTransformTranslate(currentView.transform, 0, -offset));
-        lastView.alpha = 1;
-        currentView.transform = transform;
-        currentView.alpha = 0;
-    }];
-}
 
 /**
  *  刷新界面内数值

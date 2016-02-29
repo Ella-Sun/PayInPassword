@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TransViewAfterView.h"
 
 /**
  *  根据付款对象展示的列表格式
@@ -26,13 +27,9 @@ typedef enum{
     PayAlertTypeOtherPage,//支付在另一个界面
 }PayAlertType;
 
-typedef enum{
-    PayTranslateTypeInOnepage,//在同一个界面内翻转，替换
-    PayTranslateTypeOtherPage,//滑动，替换
-}PayTranslateType;
 
 
-@interface PaymentView : UIView
+@interface PaymentView : TransViewAfterView
 
 
 //提示框标题
@@ -68,6 +65,7 @@ typedef enum{
  *  提示框弹出类型
  */
 @property (nonatomic, assign) PayAlertType alertType;
+
 
 @property (nonatomic,copy) void (^completeHandle)(NSString *inputPwd);
 

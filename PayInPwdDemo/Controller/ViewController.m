@@ -40,6 +40,7 @@
     payView.title = @"请输入支付密码";
     payView.payType = PaymentTypeCard;
     payView.alertType = PayAlertTypeAlert;
+    payView.translateType = PayTranslateTypeSlide;
     payView.payDescrip = @"提现";
     payView.payTool = @"工商银行卡";
     payView.payAmount= 10369.88;
@@ -57,6 +58,7 @@
     payView.title = @"请输入支付密码";
     payView.payType = PaymentTypeCard;
     payView.alertType = PayAlertTypeSheet;
+    payView.translateType = PayTranslateTypeSlide;
     payView.payDescrip = @"提现";
     payView.payTool = @"工商银行卡";
     payView.payAmount= 10369.88;

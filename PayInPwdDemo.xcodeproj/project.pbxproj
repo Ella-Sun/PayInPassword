@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C3F5AB81C84188600BE1F06 /* TransViewAfterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5AB71C84188600BE1F06 /* TransViewAfterView.m */; };
 		5C4FE05E1C7EAFCA009719FA /* PayDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */; };
 		5C4FE0611C7EB01A009719FA /* PayInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4FE0601C7EB01A009719FA /* PayInputView.m */; };
 		5C509DE51C7D901900914253 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509DE41C7D901900914253 /* main.m */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C3F5AB61C84188600BE1F06 /* TransViewAfterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransViewAfterView.h; sourceTree = "<group>"; };
+		5C3F5AB71C84188600BE1F06 /* TransViewAfterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransViewAfterView.m; sourceTree = "<group>"; };
 		5C4FE05C1C7EAFCA009719FA /* PayDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayDetailInfo.h; sourceTree = "<group>"; };
 		5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayDetailInfo.m; sourceTree = "<group>"; };
 		5C4FE05F1C7EB01A009719FA /* PayInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInputView.h; sourceTree = "<group>"; };
@@ -122,6 +125,8 @@
 			children = (
 				5C8DB2EB1C80312B00667A0D /* PaymentView.h */,
 				5C8DB2EC1C80312B00667A0D /* PaymentView.m */,
+				5C3F5AB61C84188600BE1F06 /* TransViewAfterView.h */,
+				5C3F5AB71C84188600BE1F06 /* TransViewAfterView.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				5C509DE51C7D901900914253 /* main.m in Sources */,
 				5C4FE05E1C7EAFCA009719FA /* PayDetailInfo.m in Sources */,
 				5C4FE0611C7EB01A009719FA /* PayInputView.m in Sources */,
+				5C3F5AB81C84188600BE1F06 /* TransViewAfterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
