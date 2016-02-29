@@ -41,8 +41,8 @@ static CGFloat cellWidth;
     CGFloat width = cellWidth;
     CGFloat height = self.frame.size.height;
     
-    CGRect titleFrame = CGRectMake(15.0, 0, width*0.3-15.0, height);
-    CGRect detailFrame = CGRectMake(width*.3, 0, width*0.7-40.0, height);
+    CGRect titleFrame = CGRectMake(15.0, 0, width*0.5-15.0, height);
+    CGRect detailFrame = CGRectMake(width*.4, 0, width*0.6-40.0, height);
     
     UILabel * titleLable = [[UILabel alloc] initWithFrame:titleFrame];
     titleLable.tag = 121;

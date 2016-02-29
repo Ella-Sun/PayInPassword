@@ -121,7 +121,7 @@
         if (_completeHandle) {
             _completeHandle(totalString);
         }
-        NSLog(@"complete");
+//        NSLog(@"complete");
     }
     
     return YES;

@@ -15,8 +15,9 @@
 		5C509DF01C7D901900914253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C509DEF1C7D901900914253 /* Assets.xcassets */; };
 		5C509DF31C7D901900914253 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C509DF11C7D901900914253 /* LaunchScreen.storyboard */; };
 		5C509E051C7D90C700914253 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509E001C7D90C700914253 /* ViewController.m */; };
-		5C509E061C7D90C700914253 /* PaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509E041C7D90C700914253 /* PaymentView.m */; };
 		5C509E091C7DA78900914253 /* PaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509E081C7DA78900914253 /* PaymentCell.m */; };
+		5C8DB2ED1C80312B00667A0D /* PaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8DB2EC1C80312B00667A0D /* PaymentView.m */; };
+		5C8DB2EF1C8038E300667A0D /* arrowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C8DB2EE1C8038E300667A0D /* arrowBack.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +35,11 @@
 		5C509DF41C7D901900914253 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C509DFF1C7D90C700914253 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5C509E001C7D90C700914253 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		5C509E031C7D90C700914253 /* PaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentView.h; sourceTree = "<group>"; };
-		5C509E041C7D90C700914253 /* PaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentView.m; sourceTree = "<group>"; };
 		5C509E071C7DA78900914253 /* PaymentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCell.h; sourceTree = "<group>"; };
 		5C509E081C7DA78900914253 /* PaymentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCell.m; sourceTree = "<group>"; };
+		5C8DB2EB1C80312B00667A0D /* PaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentView.h; sourceTree = "<group>"; };
+		5C8DB2EC1C80312B00667A0D /* PaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentView.m; sourceTree = "<group>"; };
+		5C8DB2EE1C8038E300667A0D /* arrowBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBack.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,11 +72,12 @@
 		5C509DE21C7D901900914253 /* PayInPwdDemo */ = {
 			isa = PBXGroup;
 			children = (
-				5C509DFD1C7D90C700914253 /* Category */,
 				5C509DFE1C7D90C700914253 /* Controller */,
+				5C8DB2EA1C8030FC00667A0D /* ViewModel */,
 				5C509E021C7D90C700914253 /* View */,
 				5C509DE61C7D901900914253 /* AppDelegate.h */,
 				5C509DE71C7D901900914253 /* AppDelegate.m */,
+				5C8DB2EE1C8038E300667A0D /* arrowBack.png */,
 				5C509DEC1C7D901900914253 /* Main.storyboard */,
 				5C509DEF1C7D901900914253 /* Assets.xcassets */,
 				5C509DF11C7D901900914253 /* LaunchScreen.storyboard */,
@@ -92,13 +95,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5C509DFD1C7D90C700914253 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
 		5C509DFE1C7D90C700914253 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,8 +107,6 @@
 		5C509E021C7D90C700914253 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5C509E031C7D90C700914253 /* PaymentView.h */,
-				5C509E041C7D90C700914253 /* PaymentView.m */,
 				5C4FE05C1C7EAFCA009719FA /* PayDetailInfo.h */,
 				5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */,
 				5C4FE05F1C7EB01A009719FA /* PayInputView.h */,
@@ -121,6 +115,15 @@
 				5C509E081C7DA78900914253 /* PaymentCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5C8DB2EA1C8030FC00667A0D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5C8DB2EB1C80312B00667A0D /* PaymentView.h */,
+				5C8DB2EC1C80312B00667A0D /* PaymentView.m */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +183,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C8DB2EF1C8038E300667A0D /* arrowBack.png in Resources */,
 				5C509DF31C7D901900914253 /* LaunchScreen.storyboard in Resources */,
 				5C509DF01C7D901900914253 /* Assets.xcassets in Resources */,
 				5C509DEE1C7D901900914253 /* Main.storyboard in Resources */,
@@ -194,7 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C509E051C7D90C700914253 /* ViewController.m in Sources */,
-				5C509E061C7D90C700914253 /* PaymentView.m in Sources */,
+				5C8DB2ED1C80312B00667A0D /* PaymentView.m in Sources */,
 				5C509E091C7DA78900914253 /* PaymentCell.m in Sources */,
 				5C509DE81C7D901900914253 /* AppDelegate.m in Sources */,
 				5C509DE51C7D901900914253 /* main.m in Sources */,

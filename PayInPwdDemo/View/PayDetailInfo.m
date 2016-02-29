@@ -16,6 +16,8 @@
 @property (nonatomic, strong) UIButton *closeBtn,*backBtn;
 @property (nonatomic, strong) UILabel *titleLabel, *line;
 
+@property (nonatomic, assign) CGFloat interHeight;
+
 @end
 
 @implementation PayDetailInfo
@@ -41,6 +43,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        [self initDefaultData];
         [self createDefaultViews];
         [self setNeedsLayout];
     }
@@ -67,26 +70,32 @@
     [self addSubview:self.titleLabel];
     
     //关闭按钮
-    self.closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.closeBtn = [self createCommonButton];
     self.closeBtn.tag = 112;
-    [self.closeBtn setFrame:CGRectZero];
     [self.closeBtn setTitle:@"╳" forState:UIControlStateNormal];
-    [self.closeBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [self.closeBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    self.closeBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.closeBtn addTarget:self action:@selector(dismissThisView) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.closeBtn];
+    
+    //返回按钮
+    self.backBtn = [self createCommonButton];
+    self.backBtn.tag = 113;
+    self.backBtn.hidden = YES;
+//    [self.backBtn setTitle:@"＜" forState:UIControlStateNormal];
+    UIImage *image = [UIImage imageNamed:@"arrowBack"];
+    self.backBtn.layer.contents = (id)image.CGImage;
+    [self.backBtn addTarget:self action:@selector(backToFrontView) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.backBtn];
     
     //横线
     self.line = [[UILabel alloc]initWithFrame:CGRectZero];
-    self.line.tag = 113;
+    self.line.tag = 114;
     self.line.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:self.line];
     
     //展示详情tableview
-//    CGFloat tableHeight = 180;//self.inputView.frame.origin.y - TITLE_HEIGHT;
     CGRect tableFrame = CGRectZero;
     self.detailTable = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
-    self.detailTable.tag = 114;
+    self.detailTable.tag = 115;
     self.detailTable.backgroundColor = [UIColor clearColor];
     self.detailTable.dataSource = self;
     self.detailTable.delegate = self;
@@ -107,22 +116,36 @@
 
 #pragma mark - dismiss
 
-- (void)dismiss {
+- (void)dismissThisView {
     self.dismissBtnBlock();
 }
+
+//返回上一个界面
+- (void)backToFrontView {
+    self.backBtnBlock();
+}
+
+#pragma mark - layout
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGFloat paymentWidth = self.bounds.size.width;
     CGFloat tableHeight = 180;
     
+    CGFloat btnXpiex;
+
+    btnXpiex = self.frame.size.width - TITLE_HEIGHT - 5;
+    
     CGRect titleFrame = CGRectMake(0, 0, paymentWidth, TITLE_HEIGHT);
-    CGRect canelcFrame = CGRectMake(0, 0, TITLE_HEIGHT, TITLE_HEIGHT);
     CGRect lineFrame = CGRectMake(0, TITLE_HEIGHT, paymentWidth, .5f);
     CGRect tableFrame = CGRectMake(0, TITLE_HEIGHT+1, self.frame.size.width, tableHeight);
     
+    CGRect cancelFrame = CGRectMake(btnXpiex, 0, TITLE_HEIGHT, TITLE_HEIGHT);
+    CGRect backFrame = CGRectMake(5, 0, TITLE_HEIGHT, TITLE_HEIGHT);
+    
     self.titleLabel.frame = titleFrame;
-    self.closeBtn.frame = canelcFrame;
+    self.closeBtn.frame = cancelFrame;
+    self.backBtn.frame = backFrame;
     self.line.frame = lineFrame;
     self.detailTable.frame = tableFrame;
 }
@@ -158,7 +181,7 @@
     CGFloat maxHeight = self.detailTable.frame.size.height;
     NSInteger count = self.leftTitles.count;
     NSInteger cellHeight = maxHeight/count;
-    if (cellHeight != 50) {
+    if (cellHeight > 50) {
         
         cellHeight = 50;
         
@@ -168,9 +191,9 @@
         tableFrame.size.height = tableHeight;
         self.detailTable.frame = tableFrame;
         
-        CGFloat interHeight = maxHeight - tableHeight;
+        self.interHeight = maxHeight - tableHeight;
         
-        self.changeFrameBlock(interHeight);
+        self.changeFrameBlock(self.interHeight);
     }
     
     return cellHeight;
@@ -179,7 +202,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString * payMean = self.leftTitles[indexPath.row];
     if ([payMean isEqualToString:@"付款方式"]) {
-        NSLog(@"选择支付的银行卡");
+        self.choosePayCard();
     }
 }
 

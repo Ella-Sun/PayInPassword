@@ -21,7 +21,7 @@
 
 @interface PaymentView ()
 
-@property (nonatomic, strong) PayDetailInfo * paymentAlert, *paymentOtherView;
+@property (nonatomic, strong) PayDetailInfo * paymentAlert, *paymentOtherView, *payCardView;
 @property (nonatomic, strong) PayInputView  * inputpwdView;
 
 @property (nonatomic, strong) UIButton      * sureButton;
@@ -71,6 +71,13 @@
         [weakSelf dismiss];
     };
     
+    self.paymentAlert.choosePayCard = ^(){
+        NSLog(@"选择支付的银行卡");
+        UIButton * backBtn = [weakSelf.payCardView viewWithTag:113];
+        backBtn.hidden = NO;
+        [weakSelf transformCurrentView:weakSelf.paymentAlert withLastView:weakSelf.payCardView];
+    };
+    
     self.paymentAlert.dismissBtnBlock = ^(){
         [weakSelf dismiss];
     };
@@ -79,11 +86,36 @@
         [weakSelf dismiss];
     };
     
+    self.paymentOtherView.backBtnBlock = ^(){
+        [weakSelf.inputpwdView.pwdTextField resignFirstResponder];
+        weakSelf.inputpwdView.pwdTextField.text = nil;
+        [weakSelf.inputpwdView setDotWithCount:0];
+        UIButton * backBtn = [weakSelf.paymentAlert viewWithTag:113];
+        backBtn.hidden = YES;
+        [weakSelf transformCurrentView:weakSelf.paymentOtherView withLastView:weakSelf.paymentAlert];
+    };
+    
+    self.payCardView.dismissBtnBlock = ^(){
+        [weakSelf dismiss];
+    };
+    
+    self.payCardView.backBtnBlock = ^(){
+        UIButton * backBtn = [weakSelf.paymentAlert viewWithTag:113];
+        backBtn.hidden = YES;
+        [weakSelf transformCurrentView:weakSelf.payCardView withLastView:weakSelf.paymentAlert];
+    };
+    
     self.paymentAlert.changeFrameBlock = ^(CGFloat interHeight){
         
         PaymentView * paymentView = [weakSelf viewWithTag:131];
         CGRect payFrame = paymentView.frame;
+        PaymentView * payCardView =[weakSelf viewWithTag:133];
         PaymentView * paymentOtherView = [weakSelf viewWithTag:132];
+        
+        UIButton * button = [payCardView viewWithTag:113];
+        if (!button.hidden) {
+            return;
+        }
         
         if (weakSelf.alertType == PayAlertTypeAlert) {
             //下降
@@ -110,6 +142,7 @@
         
         paymentView.frame = payFrame;
         paymentOtherView.frame = payFrame;
+        payCardView.frame = payFrame;
     };
 }
 
@@ -122,7 +155,7 @@
         self.inputpwdView.backgroundColor = [UIColor whiteColor];
         self.inputpwdView.layer.borderWidth = 1.f;
         self.inputpwdView.layer.borderColor = [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.].CGColor;
-//        [self.paymentAlert addSubview:self.inputpwdView];
+        [self.paymentAlert addSubview:self.inputpwdView];
         
         //确认付款按钮
         self.sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -131,14 +164,23 @@
         self.sureButton.layer.cornerRadius = 5.0f;
         [self.sureButton setTitle:@"确认付款" forState:UIControlStateNormal];
         [self.sureButton addTarget:self action:@selector(transformPaymentViews) forControlEvents:UIControlEventTouchUpInside];
-//        [self.paymentAlert addSubview:self.sureButton];
+        [self.paymentAlert addSubview:self.sureButton];
         
         //第二个界面
         self.paymentOtherView = [self createPaymentAlertViewCommon];
         self.paymentOtherView.tag = 132;
         self.paymentOtherView.hidden = YES;
         self.paymentOtherView.title = @"确认付款";
-//        [self addSubview:self.paymentAlert];
+        [self.paymentOtherView.detailTable removeFromSuperview];
+        [self addSubview:self.paymentOtherView];
+        
+        //选择支付方式界面
+        self.payCardView = [self createPaymentAlertViewCommon];
+        self.payCardView.tag = 133;
+        self.payCardView.hidden = YES;
+        self.payCardView.detailTable.bounces = YES;
+        self.payCardView.title = @"请选择付款方式";
+        [self addSubview:self.payCardView];
         
         //展示界面
         self.paymentAlert = [self createPaymentAlertViewCommon];
@@ -183,6 +225,10 @@
         
         self.paymentOtherView.transform = CGAffineTransformMakeScale(1.21f, 1.21f);
         self.paymentOtherView.alpha = 0;
+        
+        self.payCardView.transform = CGAffineTransformMakeScale(1.21f, 1.21f);
+        self.payCardView.alpha = 0;
+        
         self.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
@@ -192,22 +238,29 @@
 //点击确认按钮，切换视图
 - (void)transformPaymentViews {
     self.sureButton.selected = YES;
+    self.paymentOtherView.hidden = NO;
+    UIButton * backBtn = [self.paymentOtherView viewWithTag:113];
+    backBtn.hidden = NO;
+    [self transformCurrentView:self.paymentAlert withLastView:self.paymentOtherView];
+    [self.inputpwdView.pwdTextField becomeFirstResponder];
+}
+
+//翻转切换视图
+- (void)transformCurrentView:(UIView *)currentView withLastView:(UIView *)lastView {
     
-    CGFloat offset = self.paymentAlert.frame.size.height * .5;
-        self.paymentOtherView.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1, 0), CGAffineTransformTranslate(self.paymentAlert.transform, 0, -offset));
-            self.paymentOtherView.alpha = 0;
-        self.paymentOtherView.hidden = NO;
+    CGFloat offset = currentView.frame.size.height * .5;
+        lastView.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1, 0), CGAffineTransformTranslate(currentView.transform, 0, -offset));
+            lastView.alpha = 0;
+        lastView.hidden = NO;
     
     CGAffineTransform transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1.0f, 0.01f), CGAffineTransformMakeTranslation(1.0, offset));
     
     [UIView animateWithDuration:1.0f animations:^{
-        self.paymentOtherView.transform = CGAffineTransformIdentity;
-        self.paymentAlert.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1.21f, 0.1), CGAffineTransformTranslate(self.paymentAlert.transform, 0, -offset));
-        self.paymentOtherView.alpha = 1;
-        self.paymentAlert.transform = transform;
-        self.paymentAlert.alpha = 0;
-        
-        [self.inputpwdView.pwdTextField becomeFirstResponder];
+        lastView.transform = CGAffineTransformIdentity;
+        currentView.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1.21f, 0.1), CGAffineTransformTranslate(currentView.transform, 0, -offset));
+        lastView.alpha = 1;
+        currentView.transform = transform;
+        currentView.alpha = 0;
     }];
 }
 
@@ -259,11 +312,17 @@
     [self.paymentAlert.detailTable reloadData];
 }
 
+#pragma mark - layout
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     if (self.sureButton.isSelected) {
+        return;
+    }
+    
+    UIButton * backBtn = [self.payCardView viewWithTag:113];
+    if (!backBtn.hidden) {
         return;
     }
     
@@ -296,7 +355,6 @@
             if (payYpiex < 60) {
                 payYpiex += 30;
             }
-//            inputWidth = payWidth - 30;
             inputFrame = CGRectMake((payWidth-inputWidth)*.5, inputYpiex, inputWidth, inputHeight);
             self.inputpwdView.frame = inputFrame;
             
@@ -318,9 +376,7 @@
             
             CGRect payOtherFrame = CGRectMake(payXpiex, payYpiex, payWidth, payHeight);
             self.paymentOtherView.frame = payOtherFrame;
-            [self insertSubview:self.paymentOtherView belowSubview:self.paymentAlert];
             
-//            inputWidth -= 50;
             inputFrame = CGRectMake((payWidth-inputWidth)*.5, TITLE_HEIGHT+15, inputWidth, inputHeight);
             self.inputpwdView.frame = inputFrame;
             [self.paymentOtherView addSubview:self.inputpwdView];

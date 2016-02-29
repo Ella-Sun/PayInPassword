@@ -29,6 +29,10 @@
  */
 @property (nonatomic, strong) NSMutableArray * rightContents;
 
+/**
+ *  选择支付的卡片信息
+ */
+@property (nonatomic, copy) void(^choosePayCard)();
 
 /**
  *  改变整体界面的高度
@@ -40,5 +44,11 @@
  *  点击关闭按钮
  */
 @property (nonatomic, copy) void(^dismissBtnBlock)();
+
+
+/**
+ *  点击返回按钮
+ */
+@property (nonatomic, copy) void(^backBtnBlock)();
 
 @end
