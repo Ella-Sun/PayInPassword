@@ -7,16 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailInfoView.h"
 
 
-@interface PayDetailInfo : UIView
-
-//提示框标题
-@property (nonatomic, copy) NSString * title;
-
-//详情
-@property (nonatomic, strong) UITableView * detailTable;
-
+@interface PayDetailInfo : DetailInfoView
 
 /**
  *  左侧标题
@@ -40,15 +34,5 @@
 @property (nonatomic, copy) void(^changeFrameBlock)(CGFloat interHeight);
 
 
-/**
- *  点击关闭按钮
- */
-@property (nonatomic, copy) void(^dismissBtnBlock)();
-
-
-/**
- *  点击返回按钮
- */
-@property (nonatomic, copy) void(^backBtnBlock)();
 
 @end

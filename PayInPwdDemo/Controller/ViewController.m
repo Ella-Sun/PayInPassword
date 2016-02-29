@@ -37,7 +37,7 @@
 
 - (void)payMoneyInOnePage{
     PaymentView * payView = [[PaymentView alloc] init];
-    payView.title = @"请输入支付密码";
+    payView.title = @"请输入支付密码1";
     payView.payType = PaymentTypeCard;
     payView.alertType = PayAlertTypeAlert;
     payView.translateType = PayTranslateTypeSlide;
@@ -55,15 +55,15 @@
 
 - (void)payMoney{
     PaymentView * payView = [[PaymentView alloc] init];
-    payView.title = @"请输入支付密码";
+    payView.title = @"付款详情1";
     payView.payType = PaymentTypeCard;
     payView.alertType = PayAlertTypeSheet;
     payView.translateType = PayTranslateTypeSlide;
-    payView.payDescrip = @"提现";
-    payView.payTool = @"工商银行卡";
+    payView.payDescrip = @"提现1";
+    payView.payTool = @"使用中国工商银行信用卡(尾号7034)";
     payView.payAmount= 10369.88;
     
-    payView.pwdCount = 6;
+    payView.pwdCount = 5;
     [payView show];
     [payView reloadPaymentView];
     payView.completeHandle = ^(NSString *inputPwd) {

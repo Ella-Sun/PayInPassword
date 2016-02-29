@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C3F5AB81C84188600BE1F06 /* TransViewAfterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5AB71C84188600BE1F06 /* TransViewAfterView.m */; };
+		5C3F5AC11C8452D900BE1F06 /* DetailInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5ABE1C8452D900BE1F06 /* DetailInfoView.m */; };
+		5C3F5AC21C8452D900BE1F06 /* TransViewAfterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5AC01C8452D900BE1F06 /* TransViewAfterView.m */; };
 		5C4FE05E1C7EAFCA009719FA /* PayDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */; };
 		5C4FE0611C7EB01A009719FA /* PayInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4FE0601C7EB01A009719FA /* PayInputView.m */; };
 		5C509DE51C7D901900914253 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509DE41C7D901900914253 /* main.m */; };
@@ -22,8 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5C3F5AB61C84188600BE1F06 /* TransViewAfterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransViewAfterView.h; sourceTree = "<group>"; };
-		5C3F5AB71C84188600BE1F06 /* TransViewAfterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransViewAfterView.m; sourceTree = "<group>"; };
+		5C3F5ABD1C8452D900BE1F06 /* DetailInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailInfoView.h; sourceTree = "<group>"; };
+		5C3F5ABE1C8452D900BE1F06 /* DetailInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailInfoView.m; sourceTree = "<group>"; };
+		5C3F5ABF1C8452D900BE1F06 /* TransViewAfterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransViewAfterView.h; sourceTree = "<group>"; };
+		5C3F5AC01C8452D900BE1F06 /* TransViewAfterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransViewAfterView.m; sourceTree = "<group>"; };
 		5C4FE05C1C7EAFCA009719FA /* PayDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayDetailInfo.h; sourceTree = "<group>"; };
 		5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayDetailInfo.m; sourceTree = "<group>"; };
 		5C4FE05F1C7EB01A009719FA /* PayInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInputView.h; sourceTree = "<group>"; };
@@ -56,6 +59,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C3F5ABC1C84529D00BE1F06 /* FrameWork */ = {
+			isa = PBXGroup;
+			children = (
+				5C3F5ABD1C8452D900BE1F06 /* DetailInfoView.h */,
+				5C3F5ABE1C8452D900BE1F06 /* DetailInfoView.m */,
+				5C3F5ABF1C8452D900BE1F06 /* TransViewAfterView.h */,
+				5C3F5AC01C8452D900BE1F06 /* TransViewAfterView.m */,
+			);
+			path = FrameWork;
+			sourceTree = "<group>";
+		};
 		5C509DD71C7D901900914253 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				5C509DFE1C7D90C700914253 /* Controller */,
+				5C3F5ABC1C84529D00BE1F06 /* FrameWork */,
 				5C8DB2EA1C8030FC00667A0D /* ViewModel */,
 				5C509E021C7D90C700914253 /* View */,
 				5C509DE61C7D901900914253 /* AppDelegate.h */,
@@ -125,8 +140,6 @@
 			children = (
 				5C8DB2EB1C80312B00667A0D /* PaymentView.h */,
 				5C8DB2EC1C80312B00667A0D /* PaymentView.m */,
-				5C3F5AB61C84188600BE1F06 /* TransViewAfterView.h */,
-				5C3F5AB71C84188600BE1F06 /* TransViewAfterView.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -205,11 +218,12 @@
 				5C509E051C7D90C700914253 /* ViewController.m in Sources */,
 				5C8DB2ED1C80312B00667A0D /* PaymentView.m in Sources */,
 				5C509E091C7DA78900914253 /* PaymentCell.m in Sources */,
+				5C3F5AC21C8452D900BE1F06 /* TransViewAfterView.m in Sources */,
 				5C509DE81C7D901900914253 /* AppDelegate.m in Sources */,
 				5C509DE51C7D901900914253 /* main.m in Sources */,
+				5C3F5AC11C8452D900BE1F06 /* DetailInfoView.m in Sources */,
 				5C4FE05E1C7EAFCA009719FA /* PayDetailInfo.m in Sources */,
 				5C4FE0611C7EB01A009719FA /* PayInputView.m in Sources */,
-				5C3F5AB81C84188600BE1F06 /* TransViewAfterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

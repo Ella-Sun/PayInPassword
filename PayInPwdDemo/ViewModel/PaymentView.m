@@ -76,6 +76,10 @@
         NSLog(@"选择支付的银行卡");
         UIButton * backBtn = [weakSelf.payCardView viewWithTag:113];
         backBtn.hidden = NO;
+        
+        UIButton * closeBtn = [weakSelf.payCardView viewWithTag:112];
+        [closeBtn setTitle:@"设置" forState:UIControlStateNormal];
+        
         [weakSelf transformDirection:YES withCurrentView:weakSelf.paymentAlert withLastView:weakSelf.payCardView];
     };
     
@@ -88,6 +92,10 @@
         [weakSelf dismissWithCurrentView:weakSelf.paymentOtherView];
     };
     
+    self.payCardView.dismissBtnBlock = ^(){
+        [weakSelf dismissWithCurrentView:weakSelf.payCardView];
+    };
+    
     self.paymentOtherView.backBtnBlock = ^(){
         [weakSelf.inputpwdView.pwdTextField resignFirstResponder];
         weakSelf.inputpwdView.pwdTextField.text = nil;
@@ -95,10 +103,6 @@
         UIButton * backBtn = [weakSelf.paymentAlert viewWithTag:113];
         backBtn.hidden = YES;
         [weakSelf transformDirection:NO withCurrentView:weakSelf.paymentOtherView withLastView:weakSelf.paymentAlert];
-    };
-    
-    self.payCardView.dismissBtnBlock = ^(){
-        [weakSelf dismissWithCurrentView:weakSelf.payCardView];
     };
     
     self.payCardView.backBtnBlock = ^(){
@@ -181,12 +185,13 @@
         self.payCardView.tag = 133;
         self.payCardView.hidden = YES;
         self.payCardView.detailTable.bounces = YES;
-        self.payCardView.title = @"请选择付款方式";
+        self.payCardView.title = @"选择付款方式";
         [self addSubview:self.payCardView];
         
         //展示界面
         self.paymentAlert = [self createPaymentAlertViewCommon];
         self.paymentAlert.tag = 131;
+        self.paymentAlert.title = @"付款详情";
         [self addSubview:self.paymentAlert];
     }
 }
@@ -223,8 +228,13 @@
 - (void)transformPaymentViews {
     self.sureButton.selected = YES;
     self.paymentOtherView.hidden = NO;
+    
     UIButton * backBtn = [self.paymentOtherView viewWithTag:113];
     backBtn.hidden = NO;
+    
+    UIButton * closeBtn = [self.paymentOtherView viewWithTag:112];
+    closeBtn.hidden = YES;
+    
     [self transformDirection:YES withCurrentView:self.paymentAlert withLastView:self.paymentOtherView];
     
     [self performSelector:@selector(delayMethod) withObject:nil afterDelay:self.animateTime*.5];
@@ -318,7 +328,7 @@
     switch (self.alertType) {
         case PayAlertTypeAlert:{
             [self.sureButton removeFromSuperview];
-            self.paymentAlert.title = @"请输入支付密码";
+//            self.paymentAlert.title = @"请输入支付密码";
             payXpiex = 40;
             payYpiex = [UIScreen mainScreen].bounds.size.height - KEYBOARD_HEIGHT - KEY_VIEW_DISTANCE - ALERT_HEIGHT;
             payWidth = PAYMENT_WIDTH;
@@ -334,7 +344,7 @@
             break;
         case PayAlertTypeSheet:{
             [self.inputpwdView removeFromSuperview];
-            self.paymentAlert.title = @"付款详情";
+//            self.paymentAlert.title = @"付款详情";
             payXpiex = 0;
             payYpiex = [UIScreen mainScreen].bounds.size.height - ALERT_HEIGHT;
             payWidth = self.bounds.size.width;
