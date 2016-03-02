@@ -40,6 +40,7 @@
 
 - (void)initDefaultData {
 //    self.title = @"付款详情";
+    self.backgroundColor = [UIColor colorWithWhite:1. alpha:.95];
     self.detailTable.dataSource = self;
     self.detailTable.delegate = self;
 }

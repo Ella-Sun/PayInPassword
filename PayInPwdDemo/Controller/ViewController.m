@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "PaymentView.h"
+#import "PasswordBuild.h"
 
 @interface ViewController ()
 
@@ -32,7 +33,20 @@
     buton.backgroundColor = [UIColor cyanColor];
     [buton addTarget:self action:@selector(payMoney) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buton];
+    
+    UIButton * pwdButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    pwdButton.frame = CGRectMake(50, 300, 100, 30);
+    [pwdButton setTitle:@"设置密码" forState:UIControlStateNormal];
+    pwdButton.backgroundColor = [UIColor cyanColor];
+    [pwdButton addTarget:self action:@selector(createPassword) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:pwdButton];
 
+    UIButton * rePwdButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    rePwdButton.frame = CGRectMake(50, 400, 100, 30);
+    [rePwdButton setTitle:@"重置密码" forState:UIControlStateNormal];
+    rePwdButton.backgroundColor = [UIColor cyanColor];
+    [rePwdButton addTarget:self action:@selector(reCreatePassword) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:rePwdButton];
 }
 
 - (void)payMoneyInOnePage{
@@ -68,6 +82,34 @@
     [payView reloadPaymentView];
     payView.completeHandle = ^(NSString *inputPwd) {
         NSLog(@"密码是%@",inputPwd);
+    };
+}
+
+- (void)createPassword {
+    NSLog(@"设置支付密码");
+    PasswordBuild * pwdCreate = [[PasswordBuild alloc] init];
+    pwdCreate.pwdCount = 6;
+    pwdCreate.pwdOperationType = PwdOperationTypeCreate;
+    [pwdCreate show];
+    [self.view addSubview:pwdCreate];
+}
+
+- (void)reCreatePassword {
+    NSLog(@"修改支付密码");
+    PasswordBuild * pwdReCreate = [[PasswordBuild alloc] init];
+    pwdReCreate.pwdCount = 6;
+    pwdReCreate.tag = 171;
+    pwdReCreate.pwdOperationType = PwdOperationTypeReset;
+    [pwdReCreate show];
+    [self.view addSubview:pwdReCreate];
+    
+    __weak typeof(self)weakSelf = self;
+    pwdReCreate.PwdInput = ^(NSString *pwd){
+        //判断密码是否正确
+        PasswordBuild * pwdVerfy = [weakSelf.view viewWithTag:171];
+        //1.请求网络数据 进行判断
+        //2.返回数值 处理
+        [pwdVerfy verifyPwdisCorrect:YES];
     };
 }
 

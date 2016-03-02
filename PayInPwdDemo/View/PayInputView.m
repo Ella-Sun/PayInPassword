@@ -19,6 +19,11 @@
 
 @implementation PayInputView
 
+- (instancetype)init {
+    self = [self initWithFrame:CGRectZero];
+    return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -116,6 +121,8 @@
     }
     [self setDotWithCount:totalString.length];
     
+    NSLog(@"textField-----%@",textField.text);
+    NSLog(@"string--------%@",string);
     NSLog(@"_____total %@",totalString);
     if (totalString.length == self.pwdCount) {
         if (_completeHandle) {

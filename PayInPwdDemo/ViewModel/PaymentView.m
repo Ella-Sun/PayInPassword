@@ -46,10 +46,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.3f];
-        
-        self.rightContents = [NSMutableArray array];
-        
         [self drawView];
         [self createDefaultData];
         
@@ -58,11 +54,17 @@
     return self;
 }
 
-//添加block
+
+/**
+ *  添加block
+ */
 - (void)createDefaultData {
+    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.3f];
     
     self.alertType = PayAlertTypeAlert;
     self.payType = PaymentTypeShopping;
+    
+    self.rightContents = [NSMutableArray array];
 
     __weak typeof(self)weakSelf = self;
     
@@ -152,7 +154,10 @@
     };
 }
 
-//绘制默认视图
+
+/**
+ *  绘制默认视图
+ */
 - (void)drawView {
     if (!self.paymentAlert) {
         //密码区域
@@ -200,7 +205,7 @@
     PayDetailInfo * paymentAlert = [[PayDetailInfo alloc]initWithFrame:CGRectZero];
     paymentAlert.layer.cornerRadius = 5.f;
     paymentAlert.layer.masksToBounds = YES;
-    paymentAlert.backgroundColor = [UIColor colorWithWhite:1. alpha:.95];
+//    paymentAlert.backgroundColor = [UIColor colorWithWhite:1. alpha:.95];
     return paymentAlert;
 }
 

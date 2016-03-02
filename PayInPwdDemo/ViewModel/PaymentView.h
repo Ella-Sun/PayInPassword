@@ -69,9 +69,14 @@ typedef enum{
 
 @property (nonatomic,copy) void (^completeHandle)(NSString *inputPwd);
 
-//显示提示框
+/**
+ *  显示付款详情提示框
+ */
 - (void)show;
-//刷新提示框数据
+
+/**
+ *  刷新提示框数据
+ */
 - (void)reloadPaymentView;
 
 @end

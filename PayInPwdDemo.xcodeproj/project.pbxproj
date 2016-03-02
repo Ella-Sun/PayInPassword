@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5C3F5AC11C8452D900BE1F06 /* DetailInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5ABE1C8452D900BE1F06 /* DetailInfoView.m */; };
 		5C3F5AC21C8452D900BE1F06 /* TransViewAfterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5AC01C8452D900BE1F06 /* TransViewAfterView.m */; };
+		5C3F5AC51C8458E100BE1F06 /* PasswordBuild.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F5AC41C8458E100BE1F06 /* PasswordBuild.m */; };
+		5C4976B91C86C3910017BB58 /* CALayer+Shake.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4976B81C86C3910017BB58 /* CALayer+Shake.m */; };
 		5C4FE05E1C7EAFCA009719FA /* PayDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */; };
 		5C4FE0611C7EB01A009719FA /* PayInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4FE0601C7EB01A009719FA /* PayInputView.m */; };
 		5C509DE51C7D901900914253 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509DE41C7D901900914253 /* main.m */; };
@@ -27,6 +29,10 @@
 		5C3F5ABE1C8452D900BE1F06 /* DetailInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailInfoView.m; sourceTree = "<group>"; };
 		5C3F5ABF1C8452D900BE1F06 /* TransViewAfterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransViewAfterView.h; sourceTree = "<group>"; };
 		5C3F5AC01C8452D900BE1F06 /* TransViewAfterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransViewAfterView.m; sourceTree = "<group>"; };
+		5C3F5AC31C8458E100BE1F06 /* PasswordBuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordBuild.h; sourceTree = "<group>"; };
+		5C3F5AC41C8458E100BE1F06 /* PasswordBuild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordBuild.m; sourceTree = "<group>"; };
+		5C4976B71C86C3910017BB58 /* CALayer+Shake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+Shake.h"; sourceTree = "<group>"; };
+		5C4976B81C86C3910017BB58 /* CALayer+Shake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+Shake.m"; sourceTree = "<group>"; };
 		5C4FE05C1C7EAFCA009719FA /* PayDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayDetailInfo.h; sourceTree = "<group>"; };
 		5C4FE05D1C7EAFCA009719FA /* PayDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayDetailInfo.m; sourceTree = "<group>"; };
 		5C4FE05F1C7EB01A009719FA /* PayInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInputView.h; sourceTree = "<group>"; };
@@ -70,6 +76,15 @@
 			path = FrameWork;
 			sourceTree = "<group>";
 		};
+		5C4976B31C86B9CD0017BB58 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				5C4976B71C86C3910017BB58 /* CALayer+Shake.h */,
+				5C4976B81C86C3910017BB58 /* CALayer+Shake.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		5C509DD71C7D901900914253 = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +104,7 @@
 		5C509DE21C7D901900914253 /* PayInPwdDemo */ = {
 			isa = PBXGroup;
 			children = (
+				5C4976B31C86B9CD0017BB58 /* Category */,
 				5C509DFE1C7D90C700914253 /* Controller */,
 				5C3F5ABC1C84529D00BE1F06 /* FrameWork */,
 				5C8DB2EA1C8030FC00667A0D /* ViewModel */,
@@ -140,6 +156,8 @@
 			children = (
 				5C8DB2EB1C80312B00667A0D /* PaymentView.h */,
 				5C8DB2EC1C80312B00667A0D /* PaymentView.m */,
+				5C3F5AC31C8458E100BE1F06 /* PasswordBuild.h */,
+				5C3F5AC41C8458E100BE1F06 /* PasswordBuild.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -216,6 +234,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C509E051C7D90C700914253 /* ViewController.m in Sources */,
+				5C3F5AC51C8458E100BE1F06 /* PasswordBuild.m in Sources */,
+				5C4976B91C86C3910017BB58 /* CALayer+Shake.m in Sources */,
 				5C8DB2ED1C80312B00667A0D /* PaymentView.m in Sources */,
 				5C509E091C7DA78900914253 /* PaymentCell.m in Sources */,
 				5C3F5AC21C8452D900BE1F06 /* TransViewAfterView.m in Sources */,
