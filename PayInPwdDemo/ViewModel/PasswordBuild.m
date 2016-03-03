@@ -62,6 +62,84 @@
 
 
 /**
+ *  绘制默认视图
+ */
+- (void)drawView {
+    if (!self.passwordView) {
+        inputZones = [[NSMutableArray alloc] init];
+        labelZones = [[NSMutableArray alloc] init];
+        alertZones = [[NSMutableArray alloc] init];
+        
+        //创建密码
+        self.inputPwd = [self createInputView];
+        self.inputPwd.tag = 141;
+        [inputZones addObject:self.inputPwd];
+        //        [self.passwordView addSubview:self.inputPwd];
+        
+        //左侧提示文
+        self.inputLabel = [self createInputLabel];
+        self.inputLabel.tag = 161;
+        self.inputLabel.text = @"请输入新密码";
+        [labelZones addObject:self.inputLabel];
+        
+        self.alertInput = [self createInputLabel];
+        self.alertInput.tag = 181;
+        self.alertInput.text = @"原密码输入错误";
+        self.alertInput.textColor = [UIColor redColor];
+        self.alertInput.hidden = YES;
+        [alertZones addObject:self.alertInput];
+        
+        //输入新密码
+        self.reInitPwd = [self createInputView];
+        self.reInitPwd.tag = 142;
+        [inputZones addObject:self.reInitPwd];
+        //        [self.passwordView addSubview:self.reInitPwd];
+        
+        self.reInitLabel = [self createInputLabel];
+        self.reInitLabel.tag = 162;
+        self.reInitLabel.text = @"请输入新密码";
+        [labelZones addObject:self.reInitLabel];
+        
+        //再次输入新密码
+        self.finalPwd = [self createInputView];
+        self.finalPwd.tag = 143;
+        [inputZones addObject:self.finalPwd];
+        //        [self.passwordView addSubview:self.finalPwd];
+        
+        self.finalLabel = [self createInputLabel];
+        self.finalLabel.tag = 163;
+        self.finalLabel.text = @"请确认密码";
+        [labelZones addObject:self.finalLabel];
+        
+        self.alertFinal = [self createInputLabel];
+        self.alertFinal.tag = 183;
+        self.alertFinal.text = @"输入不同，请重新输入";
+        self.alertFinal.textColor = [UIColor redColor];
+        self.alertFinal.hidden = YES;
+        [alertZones addObject:self.alertFinal];
+        
+        self.passwordView = [[PayDetailInfo alloc] initWithFrame:CGRectZero];
+        self.passwordView.tag = 151;
+        [self addSubview:self.passwordView];
+    }
+}
+
+- (PayInputView *)createInputView {
+    PayInputView * inputPwd = [[PayInputView alloc] initWithFrame:CGRectZero];
+    inputPwd.backgroundColor = [UIColor whiteColor];
+    inputPwd.layer.borderWidth = 1.f;
+    inputPwd.layer.borderColor =  [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.].CGColor;
+    return inputPwd;
+}
+
+- (UILabel *)createInputLabel {
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.textColor = [UIColor darkGrayColor];
+    label.font = [UIFont systemFontOfSize:14.f];
+    return label;
+}
+
+/**
  *  添加block
  */
 - (void)createDefaultData {
@@ -96,10 +174,14 @@
             weakSelf.PwdReBuild(inputPwd);
             [weakSelf dismiss];
         } else {
+            [weakSelf.finalPwd.pwdTextField becomeFirstResponder];
+            [weakSelf clearTextFieldTextWithLineNum:3];
+            /*
             weakSelf.finalPwd.pwdTextField.text = nil;
             [weakSelf.finalPwd setDotWithCount:0];
             weakSelf.alertFinal.hidden = NO;
             [weakSelf.alertFinal.layer shake];
+           */
         }
     };
     
@@ -119,29 +201,32 @@
     
     self.alertInput.hidden = isCorrect;
     
-//    self.reInitPwd.pwdTextField.enabled = isCorrect;
-//    self.finalPwd.pwdTextField.enabled = isCorrect;
-    
     if (isCorrect) {
         //如果正确
         [self.inputPwd.pwdTextField resignFirstResponder];
         
-        /*
-         self.inputPwd.pwdTextField.text = nil;
-         
-         self.reInitPwd.pwdTextField.text = nil;
-         
-        [self.reInitPwd setDotWithCount:0];
-        
-        self.finalPwd.pwdTextField.text = nil;
-        [self.finalPwd setDotWithCount:0];
-        */
-        
         [self performSelectorOnMainThread:@selector(changeRePwdFrame) withObject:self.passwordView waitUntilDone:YES];
         
     } else {
+        [self.inputPwd.pwdTextField becomeFirstResponder];
         //如果错误
-        [self.alertInput.layer shake];
+        [self clearTextFieldTextWithLineNum:1];
+    }
+}
+
+- (void)clearTextFieldTextWithLineNum:(NSInteger)num {
+    NSInteger flag = 140 + num;
+    PayInputView * inputPwdView = [self viewWithTag:flag];
+    UILabel * alert = [self viewWithTag:(180+num)];
+    alert.hidden = NO;
+    
+    if (inputPwdView) {
+        inputPwdView.pwdTextField.text = nil;
+        [inputPwdView setDotWithCount:0];
+    }
+    
+    if (alert) {
+        [alert.layer shake];
     }
 }
 
@@ -190,83 +275,7 @@
     }
 }
 
-/**
- *  绘制默认视图
- */
-- (void)drawView {
-    if (!self.passwordView) {
-        inputZones = [[NSMutableArray alloc] init];
-        labelZones = [[NSMutableArray alloc] init];
-        alertZones = [[NSMutableArray alloc] init];
-        
-        //创建密码
-        self.inputPwd = [self createInputView];
-        self.inputPwd.tag = 141;
-        [inputZones addObject:self.inputPwd];
-//        [self.passwordView addSubview:self.inputPwd];
-        
-        //左侧提示文
-        self.inputLabel = [self createInputLabel];
-        self.inputLabel.tag = 161;
-        self.inputLabel.text = @"请输入新密码";
-        [labelZones addObject:self.inputLabel];
-        
-        self.alertInput = [self createInputLabel];
-        self.alertInput.tag = 164;
-        self.alertInput.text = @"原密码输入错误";
-        self.alertInput.textColor = [UIColor redColor];
-        self.alertInput.hidden = YES;
-        [alertZones addObject:self.alertInput];
-        
-        //输入新密码
-        self.reInitPwd = [self createInputView];
-        self.reInitPwd.tag = 142;
-        [inputZones addObject:self.reInitPwd];
-//        [self.passwordView addSubview:self.reInitPwd];
-        
-        self.reInitLabel = [self createInputLabel];
-        self.reInitLabel.tag = 162;
-        self.reInitLabel.text = @"请输入新密码";
-        [labelZones addObject:self.reInitLabel];
-        
-        //再次输入新密码
-        self.finalPwd = [self createInputView];
-        self.finalPwd.tag = 143;
-        [inputZones addObject:self.finalPwd];
-//        [self.passwordView addSubview:self.finalPwd];
-        
-        self.finalLabel = [self createInputLabel];
-        self.finalLabel.tag = 163;
-        self.finalLabel.text = @"请确认密码";
-        [labelZones addObject:self.finalLabel];
-        
-        self.alertFinal = [self createInputLabel];
-        self.alertFinal.tag = 165;
-        self.alertFinal.text = @"输入不同，请重新输入";
-        self.alertFinal.textColor = [UIColor redColor];
-        self.alertFinal.hidden = YES;
-        [alertZones addObject:self.alertFinal];
-        
-        self.passwordView = [[PayDetailInfo alloc] initWithFrame:CGRectZero];
-        self.passwordView.tag = 151;
-        [self addSubview:self.passwordView];
-    }
-}
 
-- (PayInputView *)createInputView {
-    PayInputView * inputPwd = [[PayInputView alloc] initWithFrame:CGRectZero];
-    inputPwd.backgroundColor = [UIColor whiteColor];
-    inputPwd.layer.borderWidth = 1.f;
-    inputPwd.layer.borderColor =  [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.].CGColor;
-    return inputPwd;
-}
-
-- (UILabel *)createInputLabel {
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.textColor = [UIColor darkGrayColor];
-    label.font = [UIFont systemFontOfSize:14.f];
-    return label;
-}
 
 /**
  *  弹出界面
@@ -309,60 +318,57 @@
     if ((self.pwdCount < 4) && (self.pwdCount > 8)) {
         self.pwdCount = 6;
     }
-    CGFloat pwdXpiex,pwdYpiex,pwdWidth,pwdHeight;
-    pwdXpiex = 0;
-    pwdWidth = self.bounds.size.width;
-    pwdHeight = (PAYMENT_WIDTH - 30)/6 + 250 + 15 + TITLE_HEIGHT;
-    pwdYpiex = [UIScreen mainScreen].bounds.size.height - pwdHeight;
+//    CGFloat labelXpiex = 10;
+    CGFloat labelWidth = self.frame.size.width*.5;
     
+    //密码输入框
     CGFloat inputWidth = KEY_WIDTH * self.pwdCount;
     if (self.pwdCount < 6) {
         inputWidth = (KEY_WIDTH + 10) * self.pwdCount;
     }
-//    CGFloat labelXpiex = 10;
-    CGFloat labelWidth = self.frame.size.width*.5;
-    
     CGFloat inputHeight = (PAYMENT_WIDTH-30)/6;
     CGFloat inputXpiex = (self.frame.size.width - inputWidth)*.5;
-    CGFloat inputYpiex;
+    CGFloat inputYpiex = TITLE_HEIGHT + 10;
     CGRect pwdFrame,inputFrame;
     
     CGFloat alertXpiex = self.frame.size.width*.5;
     CGFloat alertWidth = self.frame.size.width*.5 - 10;
     
-    if (self.passwordView.frame.size.height == 0) {
-        pwdFrame = CGRectMake(pwdXpiex, pwdYpiex, pwdWidth, pwdHeight);
-        self.passwordView.frame = pwdFrame;
+    //弹出框
+    CGFloat pwdXpiex,pwdYpiex,pwdWidth,pwdHeight;
+    pwdXpiex = 0;
+    pwdWidth = self.bounds.size.width;
+    pwdHeight = (PAYMENT_WIDTH - 30)/6 + 250 + 15 + TITLE_HEIGHT;
+    
+    if ([UIScreen mainScreen].bounds.size.width <= 320) {
+        pwdHeight -= 80;
     }
-//    pwdFrame = CGRectMake(pwdXpiex, pwdYpiex, pwdWidth, pwdHeight);
-//    self.passwordView.frame = pwdFrame;
     
     self.inputPwd.pwdCount = self.pwdCount;
     
     switch (self.pwdOperationType) {
         case PwdOperationTypeCreate:{
-            inputYpiex = TITLE_HEIGHT + 10;
             self.inputLabel.frame = CGRectMake(inputXpiex, inputYpiex, labelWidth, inputHeight);
             [self.passwordView addSubview:self.inputLabel];
             
-            inputFrame = CGRectMake(inputXpiex, inputYpiex+inputHeight*.8, inputWidth, inputHeight);
+            inputFrame = CGRectMake(inputXpiex, inputYpiex+inputHeight*.9, inputWidth, inputHeight);
             self.inputPwd.frame = inputFrame;
             [self.passwordView addSubview:self.inputPwd];
         }
             break;
         case PwdOperationTypeReset:{
+            self.passwordView.title = @"重设支付密码";
             self.reInitPwd.pwdCount = self.pwdCount;
             self.finalPwd.pwdCount = self.pwdCount;
             
             CGFloat interPwdHeight = (pwdHeight - TITLE_HEIGHT - 3*inputHeight)/4;
             NSLog(@"%f",interPwdHeight);
             
-            inputYpiex = TITLE_HEIGHT + 10;
             self.inputLabel.text = @"请输入原密码";
             
             [labelZones enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 UILabel * label = (UILabel *)obj;
-                CGFloat inYpiex = inputYpiex + (interPwdHeight+inputHeight)*idx;
+                CGFloat inYpiex = inputYpiex-5 + (interPwdHeight+inputHeight)*idx;
                 label.frame = CGRectMake(inputXpiex, inYpiex, labelWidth, inputHeight);
                 [self.passwordView addSubview:label];
                 
@@ -389,13 +395,21 @@
         default:
             break;
     }
+    
+    pwdYpiex = [UIScreen mainScreen].bounds.size.height - pwdHeight;
+    
+    CGFloat remainedHeight = (pwdHeight - inputHeight - self.inputPwd.frame.origin.y) - KEYBOARD_HEIGHT;
+    pwdYpiex += remainedHeight;
+    
+    if (self.passwordView.frame.size.height == 0) {
+        pwdFrame = CGRectMake(pwdXpiex, pwdYpiex, pwdWidth, pwdHeight);
+        self.passwordView.frame = pwdFrame;
+    }
 
     [self.inputPwd refreshInputViews];
     [self.reInitPwd refreshInputViews];
     [self.finalPwd refreshInputViews];
-    
 }
-
 
 
 @end

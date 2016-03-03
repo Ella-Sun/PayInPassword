@@ -119,9 +119,13 @@
         BOOL isCorrect = NO;
         if ([pwd isEqualToString:httpPwd]) {
             isCorrect = YES;
+        } else {
+            //没有创建原密码
+            NSLog(@"请先创建原密码");
+            isCorrect = NO;
         }
         //2.返回数值 处理
-        [pwdVerfy verifyPwdisCorrect:YES];
+        [pwdVerfy verifyPwdisCorrect:isCorrect];
     };
     
     pwdReCreate.PwdReBuild = ^(NSString *pwd){

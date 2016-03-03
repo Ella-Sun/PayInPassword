@@ -45,6 +45,11 @@
     
     self.pwdCount = PWD_COUNT;
     [self commontCreateLabelWithCount:self.pwdCount];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldTextDidChange)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:self.pwdTextField];
 }
 
 - (void)commontCreateLabelWithCount:(NSInteger)pwdCount {
@@ -82,6 +87,20 @@
         [self addSubview:line];
     }
     
+}
+
+/**
+ *  监听
+ */
+- (void)textFieldTextDidChange {
+    NSLog(@"长度：%ld",self.pwdTextField.text.length);
+    if (self.pwdTextField.text.length >= self.pwdCount) {
+        NSRange range = NSMakeRange(0, self.pwdCount);
+        self.pwdTextField.text = [self.pwdTextField.text substringWithRange:range];
+        [self.pwdTextField endEditing:YES];
+        
+//        [self.pwdTextField resignFirstResponder];
+    }
 }
 
 #pragma mark - layout
@@ -125,17 +144,18 @@
     NSLog(@"string--------%@",string);
     NSLog(@"_____total %@",totalString);
     if (totalString.length == self.pwdCount) {
-        textField.text = totalString;
-        [self.pwdTextField resignFirstResponder];
+        /*
         if (_completeHandle) {
             _completeHandle(totalString);
         }
+        */
         NSLog(@"complete");
     }
     
     return YES;
 }
-/*
+
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField.text.length == self.pwdCount) {
         if (_completeHandle) {
@@ -144,7 +164,7 @@
         }
     }
 }
-*/
+
 
 - (void)setDotWithCount:(NSInteger)count {
     for (UILabel *dot in pwdIndicatorArr) {

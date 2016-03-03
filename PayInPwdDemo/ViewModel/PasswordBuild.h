@@ -53,4 +53,11 @@ typedef enum{
  */
 - (void)verifyPwdisCorrect:(BOOL)isCorrect;
 
+/**
+ *  清除textfield的内容
+ *
+ *  @param num 第一行
+ */
+- (void)clearTextFieldTextWithLineNum:(NSInteger)num;
+
 @end
