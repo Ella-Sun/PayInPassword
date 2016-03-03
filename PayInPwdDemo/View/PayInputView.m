@@ -15,6 +15,8 @@
      NSMutableArray *pwdIndicatorArr;
 }
 
+@property (nonatomic, strong) UIButton * clickButton;
+
 @end
 
 @implementation PayInputView
@@ -43,6 +45,12 @@
     self.pwdTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self addSubview:self.pwdTextField];
     
+    self.clickButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.clickButton.backgroundColor = [UIColor clearColor];
+    self.clickButton.frame = CGRectZero;
+    [self.clickButton addTarget:self action:@selector(viewIsClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.clickButton];
+    
     self.pwdCount = PWD_COUNT;
     [self commontCreateLabelWithCount:self.pwdCount];
     
@@ -50,6 +58,11 @@
                                              selector:@selector(textFieldTextDidChange)
                                                  name:UITextFieldTextDidChangeNotification
                                                object:self.pwdTextField];
+}
+
+- (void)viewIsClicked {
+    NSLog(@"被点击了");
+    self.clickBlock();
 }
 
 - (void)commontCreateLabelWithCount:(NSInteger)pwdCount {
@@ -109,6 +122,9 @@
     [super layoutSubviews];
     CGRect textFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     self.pwdTextField.frame = textFrame;
+    
+    self.clickButton.frame = textFrame;
+    [self bringSubviewToFront:self.clickButton];
 }
 
 - (void)refreshInputViews {
@@ -143,14 +159,14 @@
     NSLog(@"textField-----%@",textField.text);
     NSLog(@"string--------%@",string);
     NSLog(@"_____total %@",totalString);
+    /*
     if (totalString.length == self.pwdCount) {
-        /*
         if (_completeHandle) {
             _completeHandle(totalString);
         }
-        */
         NSLog(@"complete");
     }
+     */
     
     return YES;
 }
@@ -160,8 +176,9 @@
     if (textField.text.length == self.pwdCount) {
         if (_completeHandle) {
             _completeHandle(textField.text);
-            textField.text = nil;
+//            textField.text = nil;
         }
+        self.layer.borderColor = [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.].CGColor;
     }
 }
 

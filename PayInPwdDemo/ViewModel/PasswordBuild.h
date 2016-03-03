@@ -56,7 +56,7 @@ typedef enum{
 /**
  *  清除textfield的内容
  *
- *  @param num 第一行
+ *  @param num 操作的行数
  */
 - (void)clearTextFieldTextWithLineNum:(NSInteger)num;
 

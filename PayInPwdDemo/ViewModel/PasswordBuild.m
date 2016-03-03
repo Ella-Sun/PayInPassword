@@ -176,19 +176,31 @@
         } else {
             [weakSelf.finalPwd.pwdTextField becomeFirstResponder];
             [weakSelf clearTextFieldTextWithLineNum:3];
-            /*
-            weakSelf.finalPwd.pwdTextField.text = nil;
-            [weakSelf.finalPwd setDotWithCount:0];
-            weakSelf.alertFinal.hidden = NO;
-            [weakSelf.alertFinal.layer shake];
-           */
         }
+    };
+    
+    self.inputPwd.clickBlock = ^(){
+//        [weakSelf changeInitPwdFrame];
+        weakSelf.reInitPwd.layer.borderColor = [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.].CGColor;
+    };
+    
+    self.reInitPwd.clickBlock = ^(){
+        [weakSelf changeRePwdFrame];
+        [weakSelf.reInitPwd.pwdTextField becomeFirstResponder];
+        weakSelf.reInitPwd.layer.borderColor = [UIColor redColor].CGColor;
+        
+        weakSelf.finalPwd.pwdTextField.text = nil;
+        [weakSelf.finalPwd setDotWithCount:0];
+    };
+    
+    self.finalPwd.clickBlock = ^(){
+//        [weakSelf changeFinalPwdFrame];
+        weakSelf.finalPwd.layer.borderColor = [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.].CGColor;
     };
     
     self.passwordView.dismissBtnBlock = ^(){
         [weakSelf dismiss];
     };
-    
 }
 
 
@@ -214,6 +226,11 @@
     }
 }
 
+/**
+ *  清除textfield的内容
+ *
+ *  @param num 操作的行数
+ */
 - (void)clearTextFieldTextWithLineNum:(NSInteger)num {
     NSInteger flag = 140 + num;
     PayInputView * inputPwdView = [self viewWithTag:flag];
@@ -230,6 +247,21 @@
     }
 }
 
+/**
+ *  当重新获得焦点时改变frame
+ */
+- (void)changeInitPwdFrame {
+    CGRect pwdFrame = self.passwordView.frame;
+    CGFloat pwdYpiex = pwdFrame.origin.y;
+    CGFloat inputHeight = self.inputPwd.bounds.size.height;
+    
+    CGFloat remainedHeight = (pwdYpiex - inputHeight - self.inputPwd.frame.origin.y) - KEYBOARD_HEIGHT;
+    pwdYpiex += remainedHeight;
+    pwdFrame.origin.y = pwdYpiex;
+    
+    self.passwordView.frame = pwdFrame;
+}
+
 
 /**
  *  当原始密码输入正确，失去焦点，
@@ -237,20 +269,21 @@
  */
 - (void)changeRePwdFrame {
     
-    CGFloat pwdBottom = self.passwordView.bounds.size.height - (self.reInitPwd.frame.origin.y + self.reInitPwd.frame.size.height);
-    BOOL isUp =  pwdBottom > KEYBOARD_HEIGHT?YES:NO;
-    if (!isUp) {
-        CGFloat upHeight = KEYBOARD_HEIGHT - pwdBottom;
-        CGRect passFrame = self.passwordView.frame;
-        passFrame.origin.y -= upHeight;
-        [UIView animateWithDuration:.2f
-                         animations:^{
-                             self.passwordView.frame = passFrame;
-//                             [self addSubview:self.passwordView];
-                             self.reInitPwd.pwdTextField.text = @"";
-                             [self.reInitPwd.pwdTextField becomeFirstResponder];
-                         }];
-    }
+    CGFloat pwdBottom = self.bounds.size.height - self.passwordView.frame.origin.y - (self.reInitPwd.frame.origin.y + self.reInitPwd.frame.size.height);
+//    BOOL isUp =  pwdBottom > KEYBOARD_HEIGHT?YES:NO;
+//    if (!isUp) {
+    CGFloat upHeight = KEYBOARD_HEIGHT - pwdBottom;
+    NSLog(@"upHeight:%f",upHeight);
+    CGRect passFrame = self.passwordView.frame;
+    passFrame.origin.y -= upHeight;
+    [UIView animateWithDuration:.2f
+                     animations:^{
+                         self.passwordView.frame = passFrame;
+                         //                             [self addSubview:self.passwordView];
+                         self.reInitPwd.pwdTextField.text = @"";
+                         [self.reInitPwd.pwdTextField becomeFirstResponder];
+                     }];
+//    }
 }
 
 
@@ -306,6 +339,9 @@
         
         self.alpha = 0;
     } completion:^(BOOL finished) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self.inputPwd];
+        [[NSNotificationCenter defaultCenter] removeObserver:self.reInitPwd];
+        [[NSNotificationCenter defaultCenter] removeObserver:self.finalPwd];
         [self removeFromSuperview];
     }];
 }
@@ -388,7 +424,6 @@
                 inputPwd.frame = CGRectMake(inputXpiex, inYpiex, inputWidth, inputHeight);
                 [self.passwordView addSubview:inputPwd];
             }];
-            
         }
             break;
             

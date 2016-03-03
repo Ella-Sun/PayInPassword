@@ -17,6 +17,8 @@
 
 @property (nonatomic, copy) void (^completeHandle)(NSString *inputPwd);
 
+@property (nonatomic, copy) void(^clickBlock)();
+
 /**
  *  刷新输入界面（主要是密码位数）
  */

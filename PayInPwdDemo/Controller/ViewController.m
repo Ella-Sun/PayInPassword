@@ -87,6 +87,11 @@
 
 - (void)createPassword {
     NSLog(@"设置支付密码");
+    NSString * httpPwd = [[NSUserDefaults standardUserDefaults] objectForKey:@"payCode"];
+    if (httpPwd.length > 0) {
+        NSLog(@"已经设置过密码，请修改");
+        return;
+    }
     PasswordBuild * pwdCreate = [[PasswordBuild alloc] init];
     pwdCreate.pwdCount = 6;
     pwdCreate.pwdOperationType = PwdOperationTypeCreate;
