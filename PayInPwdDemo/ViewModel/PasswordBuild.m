@@ -35,6 +35,8 @@
 
 @property (nonatomic, strong) PayInputView  * inputPwd, *reInitPwd, *finalPwd;
 
+@property (nonatomic, copy) NSString * reInitPwdText;
+
 @end
 
 
@@ -75,6 +77,7 @@
         
         if (weakSelf.pwdOperationType == PwdOperationTypeCreate) {
             [weakSelf dismiss];
+            weakSelf.PwdInit(inputPwd);
         } else {
             weakSelf.PwdInput(inputPwd);
         }
@@ -82,11 +85,22 @@
     
     self.reInitPwd.completeHandle = ^(NSString *inputPwd){
         NSLog(@"重新设置输入：%@",inputPwd);
+        weakSelf.reInitPwdText = inputPwd;
+        [weakSelf changeFinalPwdFrame];
     };
     
     self.finalPwd.completeHandle = ^(NSString *inputPwd){
         NSLog(@"再次输入：%@",inputPwd);
         //如果输入不同，清除
+        if ([inputPwd isEqualToString:weakSelf.reInitPwdText]) {
+            weakSelf.PwdReBuild(inputPwd);
+            [weakSelf dismiss];
+        } else {
+            weakSelf.finalPwd.pwdTextField.text = nil;
+            [weakSelf.finalPwd setDotWithCount:0];
+            weakSelf.alertFinal.hidden = NO;
+            [weakSelf.alertFinal.layer shake];
+        }
     };
     
     self.passwordView.dismissBtnBlock = ^(){
@@ -123,7 +137,7 @@
         [self.finalPwd setDotWithCount:0];
         */
         
-        [self performSelectorOnMainThread:@selector(changeFrame) withObject:self.passwordView waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(changeRePwdFrame) withObject:self.passwordView waitUntilDone:YES];
         
     } else {
         //如果错误
@@ -132,7 +146,11 @@
 }
 
 
-- (void)changeFrame{
+/**
+ *  当原始密码输入正确，失去焦点，
+ *  重新输入，获得焦点，并使之至于键盘上方
+ */
+- (void)changeRePwdFrame {
     
     CGFloat pwdBottom = self.passwordView.bounds.size.height - (self.reInitPwd.frame.origin.y + self.reInitPwd.frame.size.height);
     BOOL isUp =  pwdBottom > KEYBOARD_HEIGHT?YES:NO;
@@ -143,8 +161,31 @@
         [UIView animateWithDuration:.2f
                          animations:^{
                              self.passwordView.frame = passFrame;
-                             [self addSubview:self.passwordView];
+//                             [self addSubview:self.passwordView];
+                             self.reInitPwd.pwdTextField.text = @"";
                              [self.reInitPwd.pwdTextField becomeFirstResponder];
+                         }];
+    }
+}
+
+
+/**
+ *  当重新输入完成，失去焦点，
+ *  确认密码，获得焦点，并使之至于键盘上方
+ */
+- (void)changeFinalPwdFrame {
+    CGFloat pwdBottom = self.bounds.size.height - self.passwordView.frame.origin.y - (self.finalPwd.frame.origin.y + self.finalPwd.frame.size.height);
+    BOOL isUp =  pwdBottom > KEYBOARD_HEIGHT?YES:NO;
+    if (!isUp) {
+        CGFloat upHeight = KEYBOARD_HEIGHT - pwdBottom;
+        CGRect passFrame = self.passwordView.frame;
+        passFrame.origin.y -= upHeight;
+        [UIView animateWithDuration:.2f
+                         animations:^{
+                             self.passwordView.frame = passFrame;
+//                             [self addSubview:self.passwordView];
+                             self.finalPwd.pwdTextField.text = nil;
+                             [self.finalPwd.pwdTextField becomeFirstResponder];
                          }];
     }
 }

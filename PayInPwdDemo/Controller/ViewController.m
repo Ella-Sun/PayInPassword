@@ -92,6 +92,13 @@
     pwdCreate.pwdOperationType = PwdOperationTypeCreate;
     [pwdCreate show];
     [self.view addSubview:pwdCreate];
+    
+    pwdCreate.PwdInit = ^(NSString *pwd){
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:pwd forKey:@"payCode"];
+        [defaults synchronize];
+    };
 }
 
 - (void)reCreatePassword {
@@ -108,8 +115,20 @@
         //判断密码是否正确
         PasswordBuild * pwdVerfy = [weakSelf.view viewWithTag:171];
         //1.请求网络数据 进行判断
+        NSString * httpPwd = [[NSUserDefaults standardUserDefaults] objectForKey:@"payCode"];
+        BOOL isCorrect = NO;
+        if ([pwd isEqualToString:httpPwd]) {
+            isCorrect = YES;
+        }
         //2.返回数值 处理
         [pwdVerfy verifyPwdisCorrect:YES];
+    };
+    
+    pwdReCreate.PwdReBuild = ^(NSString *pwd){
+        NSLog(@"密码创建成功，新密码是：%@",pwd);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:pwd forKey:@"payCode"];
+        [defaults synchronize];
     };
 }
 

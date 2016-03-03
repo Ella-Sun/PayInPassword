@@ -125,15 +125,26 @@
     NSLog(@"string--------%@",string);
     NSLog(@"_____total %@",totalString);
     if (totalString.length == self.pwdCount) {
+        textField.text = totalString;
+        [self.pwdTextField resignFirstResponder];
         if (_completeHandle) {
             _completeHandle(totalString);
         }
-//        NSLog(@"complete");
+        NSLog(@"complete");
     }
     
     return YES;
 }
-
+/*
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField.text.length == self.pwdCount) {
+        if (_completeHandle) {
+            _completeHandle(textField.text);
+            textField.text = nil;
+        }
+    }
+}
+*/
 
 - (void)setDotWithCount:(NSInteger)count {
     for (UILabel *dot in pwdIndicatorArr) {
@@ -144,6 +155,8 @@
         ((UILabel*)[pwdIndicatorArr objectAtIndex:i]).hidden = NO;
     }
 }
+
+
 
 
 
