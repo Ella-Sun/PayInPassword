@@ -29,10 +29,17 @@
     
     UIButton * buton = [UIButton buttonWithType:UIButtonTypeSystem];
     buton.frame = CGRectMake(50, 200, 100, 30);
-    [buton setTitle:@"确认支付--two" forState:UIControlStateNormal];
+    [buton setTitle:@"确认支付--滑动" forState:UIControlStateNormal];
     buton.backgroundColor = [UIColor cyanColor];
-    [buton addTarget:self action:@selector(payMoney) forControlEvents:UIControlEventTouchUpInside];
+    [buton addTarget:self action:@selector(payMoneySlide) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buton];
+    
+    UIButton * butonTurn = [UIButton buttonWithType:UIButtonTypeSystem];
+    butonTurn.frame = CGRectMake(200, 200, 100, 30);
+    [butonTurn setTitle:@"确认支付--翻转" forState:UIControlStateNormal];
+    butonTurn.backgroundColor = [UIColor cyanColor];
+    [butonTurn addTarget:self action:@selector(payMoneyTurn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:butonTurn];
     
     UIButton * pwdButton = [UIButton buttonWithType:UIButtonTypeSystem];
     pwdButton.frame = CGRectMake(50, 300, 100, 30);
@@ -67,7 +74,7 @@
     };
 }
 
-- (void)payMoney{
+- (void)payMoneySlide{
     PaymentView * payView = [[PaymentView alloc] init];
     payView.title = @"付款详情1";
     payView.payType = PaymentTypeCard;
@@ -85,6 +92,24 @@
     };
 }
 
+- (void)payMoneyTurn{
+    PaymentView * payView = [[PaymentView alloc] init];
+    payView.title = @"付款详情1";
+    payView.payType = PaymentTypeCard;
+    payView.alertType = PayAlertTypeSheet;
+    payView.translateType = PayTranslateTypeTurn;
+    payView.payDescrip = @"提现1";
+    payView.payTool = @"使用中国工商银行信用卡(尾号7034)";
+    payView.payAmount= 8888.88;
+    
+    payView.pwdCount = 6;
+    [payView show];
+    [payView reloadPaymentView];
+    payView.completeHandle = ^(NSString *inputPwd) {
+        NSLog(@"密码是%@",inputPwd);
+    };
+}
+
 - (void)createPassword {
     NSLog(@"设置支付密码");
     NSString * httpPwd = [[NSUserDefaults standardUserDefaults] objectForKey:@"payCode"];
@@ -93,7 +118,7 @@
         return;
     }
     PasswordBuild * pwdCreate = [[PasswordBuild alloc] init];
-    pwdCreate.pwdCount = 6;
+    pwdCreate.pwdCount = 5;
     pwdCreate.pwdOperationType = PwdOperationTypeCreate;
     [pwdCreate show];
     [self.view addSubview:pwdCreate];
@@ -109,7 +134,7 @@
 - (void)reCreatePassword {
     NSLog(@"修改支付密码");
     PasswordBuild * pwdReCreate = [[PasswordBuild alloc] init];
-    pwdReCreate.pwdCount = 6;
+    pwdReCreate.pwdCount = 5;
     pwdReCreate.tag = 171;
     pwdReCreate.pwdOperationType = PwdOperationTypeReset;
     [pwdReCreate show];
