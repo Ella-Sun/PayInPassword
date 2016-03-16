@@ -62,6 +62,9 @@
 
 - (void)viewIsClicked {
     NSLog(@"被点击了");
+    if (!self.clickBlock) {
+        return;
+    }
     self.clickBlock();
 }
 

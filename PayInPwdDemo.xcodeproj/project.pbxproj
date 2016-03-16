@@ -22,6 +22,7 @@
 		5C509E091C7DA78900914253 /* PaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C509E081C7DA78900914253 /* PaymentCell.m */; };
 		5C8DB2ED1C80312B00667A0D /* PaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8DB2EC1C80312B00667A0D /* PaymentView.m */; };
 		5C8DB2EF1C8038E300667A0D /* arrowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C8DB2EE1C8038E300667A0D /* arrowBack.png */; };
+		5CF14A171C9935EB00A5061C /* password.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5CF14A161C9935EB00A5061C /* password.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		5C8DB2EB1C80312B00667A0D /* PaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentView.h; sourceTree = "<group>"; };
 		5C8DB2EC1C80312B00667A0D /* PaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentView.m; sourceTree = "<group>"; };
 		5C8DB2EE1C8038E300667A0D /* arrowBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBack.png; sourceTree = "<group>"; };
+		5CF14A161C9935EB00A5061C /* password.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = password.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 		5C509DD71C7D901900914253 = {
 			isa = PBXGroup;
 			children = (
+				5CF14A161C9935EB00A5061C /* password.gif */,
 				5C509DE21C7D901900914253 /* PayInPwdDemo */,
 				5C509DE11C7D901900914253 /* Products */,
 			);
@@ -222,6 +225,7 @@
 				5C8DB2EF1C8038E300667A0D /* arrowBack.png in Resources */,
 				5C509DF31C7D901900914253 /* LaunchScreen.storyboard in Resources */,
 				5C509DF01C7D901900914253 /* Assets.xcassets in Resources */,
+				5CF14A171C9935EB00A5061C /* password.gif in Resources */,
 				5C509DEE1C7D901900914253 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
