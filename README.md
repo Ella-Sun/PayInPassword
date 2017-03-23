@@ -10,3 +10,5 @@
 4.输入框随键盘的高度自适应
 
 5.点击输入框，框体变色以提示
+
+![效果展示](https://github.com/Sun-Hong/PayInPassword/blob/master/password.gif)
